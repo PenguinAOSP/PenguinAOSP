@@ -1,0 +1,19 @@
+# 上游检出树与本地产物 —— 永不进 git（真相源是本仓库其它目录）
+/source/
+/.repo/
+
+# 构建与日志
+*.log
+*.img
+*.zip
+out/
+
+# Python / 编辑器 / 系统
+__pycache__/
+*.pyc
+.venv/
+.idea/
+.vscode/
+*.swp
+*~
+.directory

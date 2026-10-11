@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# PenguinAOSP: 拉取 UwUAOSP 上游源码树到 source/
+# 真相源不是这里 —— source/ 可随时删除重下；Penguin 层用 scripts/apply-all.sh 重放。
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SRC="${PENGUIN_SOURCE_DIR:-$ROOT/source}"
+
+# UwUAOSP 官方推荐走 release manifest（开发分支官方标注"可能不稳定"）。
+MANIFEST_URL="${PENGUIN_MANIFEST_URL:-https://github.com/uwuAOSP/platform_vendor_uwu-versions.git}"
+MANIFEST_BRANCH="${PENGUIN_MANIFEST_BRANCH:-main}"
+
+source "$ROOT/scripts/proxy-env.sh"
+
+mkdir -p "$SRC"
+cd "$SRC"
+
+if [ ! -d .repo/manifests ]; then
+    echo "[init] repo init -u $MANIFEST_URL -b $MANIFEST_BRANCH --git-lfs"
+    repo init -u "$MANIFEST_URL" -b "$MANIFEST_BRANCH" --git-lfs
+else
+    echo "[init] .repo 已存在，跳过 repo init"
+fi
+
+echo "[init] repo sync（可先用 PENGUIN_SYNC_JOBS 限制并发）"
+repo sync -c -j"${PENGUIN_SYNC_JOBS:-$(nproc --all)}" \
+    --force-sync --force-checkout --no-clone-bundle --no-tags \
+    --optimized-fetch --prune
+
+echo "[init] 完成。下一步: bash scripts/apply-all.sh"
