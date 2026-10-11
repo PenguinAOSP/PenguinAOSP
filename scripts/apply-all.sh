@@ -12,6 +12,7 @@ export SOURCE_DIR="${SOURCE_DIR:-$ROOT/source}"
 # 开关默认值（新功能在这里登记，并同步 docs/patch-toggles.md）
 PENGUIN_DEFAULTS=(
     PENGUIN_BRANDING=1
+    PENGUIN_CERRO_DEVICE=1
 )
 for kv in "${PENGUIN_DEFAULTS[@]}"; do
     key="${kv%%=*}"
@@ -42,6 +43,7 @@ apply_layer() {
 
 # ---- apply layers（按依赖顺序，新功能按编号往下加） --------------------------
 LAYERS=(
+    "cerro-device|$ROOT/scripts/apply-cerro-device.sh|PENGUIN_CERRO_DEVICE"
     "branding|$ROOT/scripts/apply-penguin-branding.sh|PENGUIN_BRANDING"
 )
 # -----------------------------------------------------------------------------

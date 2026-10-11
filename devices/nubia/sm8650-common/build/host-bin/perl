@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# RisingOS cerro: tools-lineage perl needs libcrypt.so.1 (Fedora 44 has .so.2).
+# oid_registry hardcodes "perl" on PATH; wrap the host interpreter.
+exec /usr/bin/perl "$@"

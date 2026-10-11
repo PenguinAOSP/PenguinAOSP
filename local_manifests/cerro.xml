@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PenguinAOSP — Nubia Z60 Ultra (cerro) + SM8650 common.
+  Base device/kernel/vendor: nubia-sm8650-devs (lineage-23.2).
+  Own remote name "nubia" to avoid clashing with UwUAOSP manifest remotes
+  (aosp / lineageos / github / gitlab).
+-->
+<manifest>
+  <remote name="nubia" fetch="https://github.com/nubia-sm8650-devs/" revision="lineage-23.2" />
+
+  <project path="device/nubia/cerro" name="android_device_nubia_cerro" remote="nubia" />
+  <project path="device/nubia/sm8650-common" name="android_device_nubia_sm8650-common" remote="nubia" />
+
+  <project path="kernel/nubia/sm8650" name="android_kernel_nubia_sm8650" remote="nubia" />
+  <project path="kernel/nubia/sm8650-devicetrees" name="android_kernel_nubia_sm8650-devicetrees" remote="nubia" />
+  <project path="kernel/nubia/sm8650-modules" name="android_kernel_nubia_sm8650-modules" remote="nubia" />
+
+  <project path="vendor/nubia/cerro" name="proprietary_vendor_nubia_cerro" remote="nubia" />
+  <project path="vendor/nubia/sm8650-common" name="proprietary_vendor_nubia_sm8650-common" remote="nubia" />
+</manifest>

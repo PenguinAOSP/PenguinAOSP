@@ -5,7 +5,7 @@
 
 | ID | 文档 | 状态 | 开关 |
 |----|------|------|------|
-| （暂无） | | | |
+| DT01 | [dt01-cerro-device-layer.md](dt01-cerro-device-layer.md) | done | `PENGUIN_CERRO_DEVICE` |
 
 ---
 

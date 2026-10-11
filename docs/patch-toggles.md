@@ -6,6 +6,7 @@
 | KEY | 功能 | 默认 | apply 脚本 | 文档 |
 |-----|------|------|------------|------|
 | `PENGUIN_BRANDING` | PenguinAOSP 品牌（名称/版本/OTA 属性） | 1 | `scripts/apply-penguin-branding.sh` | `docs/features/branding.md`（待建） |
+| `PENGUIN_CERRO_DEVICE` | cerro/sm8650 设备层（基座+Rising 优化，无 UDC） | 1 | `scripts/apply-cerro-device.sh` | `docs/features/dt01-cerro-device-layer.md` |
 
 用法示例：
 

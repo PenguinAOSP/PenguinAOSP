@@ -22,6 +22,16 @@ else
     echo "[init] .repo 已存在，跳过 repo init"
 fi
 
+# cerro 设备/内核/vendor 仓库（nubia-sm8650-devs）通过 local manifest 注入
+if [ -d "$ROOT/local_manifests" ]; then
+    mkdir -p .repo/local_manifests
+    for xml in "$ROOT/local_manifests"/*.xml; do
+        [ -f "$xml" ] || continue
+        cp -a "$xml" .repo/local_manifests/
+        echo "[init] 安装 local_manifests/$(basename "$xml")"
+    done
+fi
+
 echo "[init] repo sync（可先用 PENGUIN_SYNC_JOBS 限制并发）"
 repo sync -c -j"${PENGUIN_SYNC_JOBS:-$(nproc --all)}" \
     --force-sync --force-checkout --no-clone-bundle --no-tags \

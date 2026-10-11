@@ -1,0 +1,2 @@
+# Trigger buttons
+type proc_touchkey, fs_type, proc_type;

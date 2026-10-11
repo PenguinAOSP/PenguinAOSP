@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 RisingOS cerro
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Keep LineageParts gestures, add cerro gpio-keys slider. -->
+    <string-array name="config_deviceKeyHandlerLibs" translatable="false">
+        <item>/system_ext/priv-app/LineageParts/LineageParts.apk</item>
+        <item>/system_ext/priv-app/NubiaGameSwitch/NubiaGameSwitch.apk</item>
+    </string-array>
+    <string-array name="config_deviceKeyHandlerClasses" translatable="false">
+        <item>org.lineageos.lineageparts.gestures.KeyHandler</item>
+        <item>org.lineageos.device.NubiaParts.gameswitch.GameSwitchDeviceKeyHandler</item>
+    </string-array>
+</resources>

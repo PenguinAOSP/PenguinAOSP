@@ -24,3 +24,14 @@
   - cerro 设备树迁移（M1）：参考本地 `MikuUI_cerro` / `RisingOS_cerro`，及 `AlphaDroid_Oneplus12/device/oneplus/sm8650-common` 组织方式。
   - `build-cerro.sh` 为占位，待 M1 补全。
 - 产出：本仓库首个 commit；`docs/SKELETON.md`、`AGENTS.md`、docs 体系初始化。
+
+## 2026-10-11 — cerro 设备层导入（DT01）
+- 做了：
+  - 确认 Rising cerro 基座 = nubia-sm8650-devs（lineage-23.2）；Rising 优化 = device-overlay 增量（经全量 diff 确认）。
+  - 克隆基座到 devices/nubia/{cerro,sm8650-common}（commit 记录于 BASE.md），叠加 overlay 并剔除 UDC 三处（SystemUIResCerro RRO / FrameworksResTarget_Vendor config.xml / patch_udc_camera_protection.py）。
+  - local_manifests/cerro.xml（自定义 remote nubia，避开 UwU manifest remote 名）；init-uwu-source.sh 自动安装。
+  - scripts/apply-cerro-device.sh 挂 apply-all 第 1 层，开关 PENGUIN_CERRO_DEVICE；导入 Rising 驱动编译修复 4 个到 scripts/cerro/（未挂链，M1 验证）。
+- 没做完 / 下一步：
+  - source 同步已启动（后台，UwU release manifest + cerro local manifest）。
+  - M1: UwU 树上接入 penguin_cerro 产品（lunch 前缀 penguin_）、vendor/lineage 依赖确认、scripts/cerro 补丁逐个验证。
+- 产出：commit（devices/scripts/docs）；docs/features/dt01-cerro-device-layer.md。
