@@ -6,6 +6,7 @@
 | ID | 文档 | 状态 | 开关 |
 |----|------|------|------|
 | DT01 | [dt01-cerro-device-layer.md](dt01-cerro-device-layer.md) | done | `PENGUIN_CERRO_DEVICE` |
+| FT01 | [ft01-penguin-laboratory.md](ft01-penguin-laboratory.md) | wip | `PENGUIN_LABORATORY` |
 
 ---
 

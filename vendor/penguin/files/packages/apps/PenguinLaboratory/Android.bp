@@ -1,0 +1,177 @@
+//
+// Copyright (C) 2026 The PenguinOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_library_import {
+    name: "PenguinLaboratory-common-18.10.0",
+    aars: ["libs/common-18.10.0.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+java_import {
+    name: "PenguinLaboratory-firebase-annotations-16.0.0",
+    jars: ["libs/firebase-annotations-16.0.0.jar"],
+    sdk_version: "current",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-firebase-components-16.1.0",
+    aars: ["libs/firebase-components-16.1.0.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+java_import {
+    name: "PenguinLaboratory-firebase-encoders-16.1.0",
+    jars: ["libs/firebase-encoders-16.1.0.jar"],
+    sdk_version: "current",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-firebase-encoders-json-17.1.0",
+    aars: ["libs/firebase-encoders-json-17.1.0.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-image-1.0.0-beta1",
+    aars: ["libs/image-1.0.0-beta1.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+java_import {
+    name: "PenguinLaboratory-javax.inject-1",
+    jars: ["libs/javax.inject-1.jar"],
+    sdk_version: "current",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-play-services-base-18.1.0",
+    aars: ["libs/play-services-base-18.1.0.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-play-services-basement-18.1.0",
+    aars: ["libs/play-services-basement-18.1.0.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-play-services-mlkit-subject-segmentation-16.0.0-beta1",
+    aars: ["libs/play-services-mlkit-subject-segmentation-16.0.0-beta1.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-play-services-tasks-18.0.2",
+    aars: ["libs/play-services-tasks-18.0.2.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-transport-api-2.2.1",
+    aars: ["libs/transport-api-2.2.1.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-transport-backend-cct-2.3.3",
+    aars: ["libs/transport-backend-cct-2.3.3.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-transport-runtime-2.2.6",
+    aars: ["libs/transport-runtime-2.2.6.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-vision-common-17.3.0",
+    aars: ["libs/vision-common-17.3.0.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+android_library_import {
+    name: "PenguinLaboratory-vision-interfaces-16.3.0",
+    aars: ["libs/vision-interfaces-16.3.0.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
+android_app {
+    name: "PenguinLaboratory",
+
+    srcs: [
+        "src/**/*.java",
+        "src/**/*.kt",
+    ],
+    resource_dirs: ["res"],
+
+    static_libs: [
+        "PenguinLaboratory-common-18.10.0",
+        "PenguinLaboratory-firebase-annotations-16.0.0",
+        "PenguinLaboratory-firebase-components-16.1.0",
+        "PenguinLaboratory-firebase-encoders-16.1.0",
+        "PenguinLaboratory-firebase-encoders-json-17.1.0",
+        "PenguinLaboratory-image-1.0.0-beta1",
+        "PenguinLaboratory-javax.inject-1",
+        "PenguinLaboratory-play-services-base-18.1.0",
+        "PenguinLaboratory-play-services-basement-18.1.0",
+        "PenguinLaboratory-play-services-mlkit-subject-segmentation-16.0.0-beta1",
+        "PenguinLaboratory-play-services-tasks-18.0.2",
+        "PenguinLaboratory-transport-api-2.2.1",
+        "PenguinLaboratory-transport-backend-cct-2.3.3",
+        "PenguinLaboratory-transport-runtime-2.2.6",
+        "PenguinLaboratory-vision-common-17.3.0",
+        "PenguinLaboratory-vision-interfaces-16.3.0",
+        "androidx.activity_activity-compose",
+        "androidx.annotation_annotation",
+        "androidx.appcompat_appcompat",
+        "androidx.compose.foundation_foundation",
+        "androidx.compose.material3_material3",
+        "androidx.compose.runtime_runtime",
+        "androidx.compose.ui_ui",
+        "androidx.graphics_graphics-shapes",
+        "androidx.lifecycle_lifecycle-runtime-compose",
+        "com.composables_icons-material-symbols-rounded-filled-android",
+        "kotlinx_coroutines_android",
+        "androidx.collection_collection",
+        "androidx.core_core",
+        "androidx.exifinterface_exifinterface",
+        "androidx.fragment_fragment",
+    ],
+
+    // Not platform signed: platform_app may not map Play services' module code, which the
+    // segmentation runs from
+    sdk_version: "current",
+    system_ext_specific: true,
+    // For WRITE_SECURE_SETTINGS, which DeX's switches need
+    privileged: true,
+    required: ["privapp_permissions_com.penguin.laboratory"],
+
+    // ML Kit and Play services resolve their components by reflection
+    optimize: {
+        enabled: false,
+    },
+}
+
+prebuilt_etc {
+    name: "privapp_permissions_com.penguin.laboratory",
+    src: "privapp_permissions_com.penguin.laboratory.xml",
+    sub_dir: "permissions",
+    system_ext_specific: true,
+}

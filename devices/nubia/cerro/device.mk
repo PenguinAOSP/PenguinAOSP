@@ -8,6 +8,15 @@ $(call inherit-product, device/nubia/sm8650-common/common.mk)
 
 DEVICE_PATH := device/nubia/cerro
 
+# PenguinOS: uwuAOSP bringup flags (docs/bringup-17)
+UWU_DEVICE_TYPE := phone
+UWU_SUPPORTS_TELEPHONY := true
+UWU_MAINTAINER := ycrrongos
+
+# PenguinOS: PenguinLaboratory (penguinOS feature hub, see docs/penguinos-feature-inventory.md)
+PRODUCT_PACKAGES += \
+    PenguinLaboratory
+
 # Audio
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/audio/mixer_paths_pineapple_mtp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_pineapple/mixer_paths_pineapple_mtp.xml

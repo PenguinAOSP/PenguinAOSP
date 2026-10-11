@@ -7,6 +7,12 @@
 -->
 <manifest>
   <remote name="nubia" fetch="https://github.com/nubia-sm8650-devs/" revision="lineage-23.2" />
+  <!-- UwU release manifests pin LineageOS/android_hardware_interfaces to a commit
+       their own fork never fetched (404). Pull it from the real LineageOS org instead. -->
+  <remote name="lineage-real" fetch="https://github.com/LineageOS/" />
+
+  <remove-project name="LineageOS/android_hardware_interfaces" />
+  <project path="hardware/interfaces" name="android_hardware_interfaces" remote="lineage-real" revision="6b9a2ab61c0177b5ee8cb42f5fbe5558cca60367" />
 
   <project path="device/nubia/cerro" name="android_device_nubia_cerro" remote="nubia" />
   <project path="device/nubia/sm8650-common" name="android_device_nubia_sm8650-common" remote="nubia" />

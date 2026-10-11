@@ -13,6 +13,7 @@ export SOURCE_DIR="${SOURCE_DIR:-$ROOT/source}"
 PENGUIN_DEFAULTS=(
     PENGUIN_BRANDING=1
     PENGUIN_CERRO_DEVICE=1
+    PENGUIN_LABORATORY=1
 )
 for kv in "${PENGUIN_DEFAULTS[@]}"; do
     key="${kv%%=*}"
@@ -43,6 +44,7 @@ apply_layer() {
 
 # ---- apply layers（按依赖顺序，新功能按编号往下加） --------------------------
 LAYERS=(
+    "penguin-laboratory|$ROOT/scripts/apply-penguin-laboratory.sh|PENGUIN_LABORATORY"
     "cerro-device|$ROOT/scripts/apply-cerro-device.sh|PENGUIN_CERRO_DEVICE"
     "branding|$ROOT/scripts/apply-penguin-branding.sh|PENGUIN_BRANDING"
 )
