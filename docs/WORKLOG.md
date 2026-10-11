@@ -35,3 +35,8 @@
   - source 同步已启动（后台，UwU release manifest + cerro local manifest）。
   - M1: UwU 树上接入 penguin_cerro 产品（lunch 前缀 penguin_）、vendor/lineage 依赖确认、scripts/cerro 补丁逐个验证。
 - 产出：commit（devices/scripts/docs）；docs/features/dt01-cerro-device-layer.md。
+
+## 2026-10-11 — penguinOS 功能盘点（移植规划输入）
+- 做了：克隆 penguinOS 6 个参考仓库到 reference/penguinos/；确认专属功能不在 Settings（只有入口+3 widget），核心是独立应用 PenguinLaboratory + frameworks_base SystemUI 内嵌 penguin/ 包 + 独立 APK（PenguinSystemUI/PenguinDex）；产出 docs/penguinos-feature-inventory.md（功能×设置键×消费端×依赖 全表 + 移植顺序建议）。
+- 没做完 / 下一步：M3 按盘点顺序移植；sync 修复循环仍在后台跑。
+- 产出：docs/penguinos-feature-inventory.md；参考树 reference/penguinos/（gitignore）。
