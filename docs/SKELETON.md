@@ -158,3 +158,17 @@ bash scripts/apply-penguin-branding.sh
 | `docs/TROUBLESHOOTING.md` | 排障日志：症状/试过/根因/解法 | 每次卡住、踩坑、误判 |
 | `docs/patch-toggles.md` | `PENGUIN_*` 开关总表 | 每新增开关 |
 | `docs/SKELETON.md` | 本骨架方案 | 结构性变化时 |
+
+---
+
+## 8. penguinOS 内容引入方案
+
+penguinOS（AOSPA fork，https://github.com/Project-penguinOS ，Android 17 "cinnamon bun"，branch `celerity`）的仓库全部公开，只**当参考源码读、不当基座**。引入流程：
+
+1. **参考树落位**：需要的 penguinOS 仓库浅克隆到 `reference/penguinos/`（gitignore，只读对照，禁止直接打进任何编译树）；
+2. **查重先行**：UwU 自带大量定制（uwuSettingsExt 等），先确认功能在 UwU 上没有等价物，避免重复实现；
+3. **移植而非 cherry-pick**：penguinOS 基座是 AOSPA 系，与 UwU（Lineage 系）树差异大，上游 commit 不能直接拣；按"读懂实现 → 在 UwU 锚点上重写 → 打 B 类补丁"走标准新功能流程；
+4. **登记来源**：feature 文档必须写"上游参考: penguinOS <repo>@<commit>"，patch 头部注明移植自何处（AOSPA 系 Apache-2.0，保留署名即可）；
+5. **品牌物料**：PenguinAOSP 名称/logo/壁纸等自建，不搬 penguinOS 的素材（它叫 PenguinOS，我们是 PenguinAOSP，避免品牌混淆）。
+
+---

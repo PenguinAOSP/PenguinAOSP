@@ -17,3 +17,6 @@ __pycache__/
 *.swp
 *~
 .directory
+
+# penguinOS 参考树（只读对照，见 docs/SKELETON.md §8）
+/reference/
