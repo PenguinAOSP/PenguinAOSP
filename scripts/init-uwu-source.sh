@@ -12,6 +12,13 @@ MANIFEST_BRANCH="${PENGUIN_MANIFEST_BRANCH:-main}"
 
 source "$ROOT/scripts/proxy-env.sh"
 
+# repo 启动器可能装在 ~/.local/bin 而不在 PATH
+case ":$PATH:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) [ -x "$HOME/.local/bin/repo" ] && PATH="$HOME/.local/bin:$PATH" ;;
+esac
+command -v repo >/dev/null || { echo "[init] 错误: 找不到 repo 启动器" >&2; exit 1; }
+
 mkdir -p "$SRC"
 cd "$SRC"
 
