@@ -14,6 +14,14 @@
 
 ---
 
+## 2026-11-06 — GitHub org 仓上线（Contributors=本人 + vibe coding 声明）
+- 做了：
+  - 组织仓 https://github.com/PenguinAOSP/PenguinAOSP 已推送 `main`（真相源树；`source/` 不进 git）。
+  - README 增加 **Built with vibe coding**（Cursor / Codex）；提交作者统一 `ycrrongos`，Contributors 仅本人。
+  - 不做 UwU `platform_*` 整树 fork（仍补丁层模型）；GitHub 可单仓 Fork，不能一键镜像整个 UwUAOSP。
+- 没做完 / 下一步：用户应**立刻撤销**曾在聊天里贴出的 PAT 并换新；可选加 org `.github` profile README。
+- 产出：远程 `main@88cac0a`、本 WORKLOG。
+
 ## 2026-11-06 — 基座 sync 17.0.181 + 补丁重放
 - 做了：
   - UwUAOSP release：`17.0.139` → **`17.0.181`**（`repo init -m default.xml` 后 `repo sync`；`frameworks/base` → `cf335ab632a8`）。
