@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  Penguin-owned overlays on top of the UwU-derived pin.
+  Device/vendor trees live in the PenguinAOSP org; patch scripts stay in
+  the PenguinAOSP/PenguinAOSP meta repo (also cloned for docs/scripts).
+-->
+<manifest>
+  <!-- Meta / patch-layer truth source (scripts, docs, vendor/penguin copies) -->
+  <project name="PenguinAOSP" path="penguin" remote="penguin" revision="main" />
+
+  <!-- Device trees (paths match apply-cerro-device layout) -->
+  <project name="device_nubia_cerro" path="device/nubia/cerro" remote="penguin" revision="main" />
+  <project name="device_nubia_sm8650-common" path="device/nubia/sm8650-common" remote="penguin" revision="main" />
+
+  <!-- Vendor penguin feature tree (extracted from meta; can point to same monorepo later) -->
+  <project name="vendor_penguin" path="vendor/penguin" remote="penguin" revision="main" />
+</manifest>

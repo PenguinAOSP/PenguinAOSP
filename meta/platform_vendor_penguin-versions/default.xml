@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+SPDX-FileCopyrightText: The PenguinAOSP Project
+SPDX-License-Identifier: Apache-2.0
+-->
+<manifest>
+  <include name="manifest/17.0.181.xml" />
+  <include name="manifest/penguin_overlay.xml" />
+</manifest>

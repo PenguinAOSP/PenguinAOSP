@@ -11,18 +11,23 @@ First device: **Nubia Z60 Ultra (`cerro`, SM8650)**.
 This repository was built with **[Cursor](https://cursor.com)** / **Codex** vibe coding (AI-assisted agent workflow).  
 Git history / GitHub **Contributors** only list the human owner ([@ycrrongos](https://github.com/ycrrongos)); AI tools are not co-authors on commits.
 
-## Quick start
+## Quick start (normal AOSP sync via org)
 
 ```bash
-# 1) Sync UwUAOSP (release manifest)
-bash scripts/init-uwu-source.sh
+# 1) repo init/sync from PenguinAOSP release manifest
+bash scripts/init-penguin-source.sh
+# equivalent:
+#   repo init -u https://github.com/PenguinAOSP/platform_vendor_penguin-versions.git -b main --git-lfs
+#   repo sync -c -j$(nproc)
 
-# 2) Replay Penguin layer
+# 2) Replay Penguin patch layer (kept on purpose)
 bash scripts/apply-all.sh
 
 # 3) Build cerro OTA
 bash scripts/build-cerro.sh va
 ```
+
+UwU ROM-layer repos are **forked into** the [PenguinAOSP org](https://github.com/PenguinAOSP); AOSP/Lineage stay upstream. Meta/docs/scripts: this repo.
 
 ## Repository layout (truth source)
 

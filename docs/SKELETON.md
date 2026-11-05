@@ -1,33 +1,41 @@
 # PenguinAOSP 工程骨架方案
 
-> 状态：v1（2026-10-11 初稿）
-> 基座：**UwUAOSP（Android 17，branch `uwu-17.0`）**，https://github.com/UwUAOSP
+> 状态：v2（2026-11-06）— 组织可 `repo sync` + 保留补丁层  
+> 基座：**UwUAOSP（Android 17）**，https://github.com/uwuAOSP  
+> GitHub org：**https://github.com/PenguinAOSP**  
 > 首个目标设备：**Nubia Z60 Ultra (`cerro`, SM8650)**
 
 ---
 
 ## 1. 项目定位
 
-**PenguinAOSP** 是基于 UwUAOSP 的定制 Android ROM，核心理念是**对开发者友好**：
+**PenguinAOSP** 是基于 UwUAOSP 的定制 Android ROM，目标是：
 
-- 所有自定义改动**不以 fork 整树的方式发布**，而是以**可重放补丁层**的形式维护；
-- 任何人 `repo sync` 完上游 UwUAOSP 之后，跑一遍 apply 脚本即可得到完整的 PenguinAOSP 树；
-- 每个 feature 都有独立开发文档，不依赖任何人的聊天记录/口头约定。
+1. **普通 AOSP 用法**：`repo init` Penguin 组织的 release manifest → `repo sync` → `lunch` → 编译；
+2. **补丁层可重放**：功能仍用 `vendor/penguin` + `scripts/apply-all.sh` 维护，不把逻辑淹没在整树 history 里；
+3. **文档齐全**：每个 feature 有独立开发文档。
 
-### 为什么不用 AlphaDroid 的整树 fork 方案
+### 组织里放什么（不是 1000+ 个 AOSP 镜像）
 
-参考树 `/run/media/rong/data/AlphaDroid_Oneplus12/` 的做法是：org 里 fork 全部仓库、manifest 指向自己的 fork，功能直接 commit 在自家仓库分支上（如 `frameworks/base` 上的 `sandbox:` 系列提交）。这个方案：
+| 来源 | 数量级 | 策略 |
+|------|--------|------|
+| AOSP | ~867 | 继续 `android.googlesource.com` |
+| LineageOS | ~159 | 继续 `github.com/LineageOS/...` |
+| UwU ROM 层 | ~46 | **Fork 进 PenguinAOSP 组织** |
+| Penguin 自有 | 设备/vendor/meta/versions | 组织仓 |
 
-- 优点：对 ROM 组织本身维护方便，manifest 一把梭；
-- 缺点：**下游不可复现**——想拿到某个功能必须理解整个 fork 的历史；跟上游冲突要整树 rebase；对"外部开发者基于它做 ROM"不友好。
+入口：[`platform_vendor_penguin-versions`](https://github.com/PenguinAOSP/platform_vendor_penguin-versions)（钉 **17.0.181**，自 UwU versions 衍生）。
 
-PenguinAOSP 反其道而行：上游保持纯净（UwUAOSP 官方 manifest），Penguin 层全部收敛为本仓库内的补丁 + vendor 副本，用 `scripts/apply-all.sh` 重放。这正是 PlasmaAOSP 已经验证过可行的工作流。
+### 与「纯 AlphaDroid 整树 fork」的差别
+
+- AlphaDroid：功能直接 commit 进各 `platform_*`，下游难复现。
+- PenguinAOSP：**组织提供可 sync 的完整树**，但 Penguin 功能真相源仍是补丁脚本；上游 UwU 升级时重放 `apply-all.sh`，锚点坏了就修。
 
 ### 与 UwUAOSP 的关系
 
-- 只做**层**，不做 fork：不改 UwUAOSP 官方仓库，不开自己的 platform_* 镜像；
-- 上游更新走 `repo sync` + `apply-all.sh` 重放；补丁失效就修补丁，不丢功能；
-- UwU 自带的功能（uwuSettingsExt、uwu-sdk 等）按原样保留，品牌层做最小化覆盖（PenguinAOSP 名称/lunch 前缀/OTA 属性），不深改 uwu 内部。
+- 基座代码来自 UwU；组织内 UwU 层是 fork，便于大家只对 `PenguinAOSP` 做 `repo init`；
+- 上游更新：同步/快进 forks → 升 versions pin → `apply-all.sh`；
+- UwU 自带功能按原样保留；品牌层最小覆盖（PenguinAOSP 名 / lunch 前缀）。
 
 ---
 

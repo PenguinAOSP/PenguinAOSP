@@ -3,11 +3,13 @@
 给后续 agent 的工作约定。**改代码前先读本文件、`docs/SKELETON.md`、对应功能文档、以及 `docs/TROUBLESHOOTING.md`。**
 
 本仓库是 **PenguinAOSP** 定制 ROM 的**唯一真相源**。对外系统名 **PenguinAOSP**。
-基座是 **UwUAOSP（Android 17）**（https://github.com/UwUAOSP，branch `uwu-17.0`；release manifest `platform_vendor_uwu-versions@main`）。
-penguinOS（AOSPA fork，https://github.com/Project-penguinOS）仅作功能参考，**不使用其代码和树**。
+基座是 **UwUAOSP（Android 17）**。GitHub 组织 **https://github.com/PenguinAOSP**：
+- 对外 sync 入口：`platform_vendor_penguin-versions`（钉 UwU **17.0.181**；UwU ROM 层 fork 进组织；AOSP/Lineage 仍走上游）；
+- 本仓库 + `vendor_penguin`：补丁层真相源（`apply-all.sh` 必须可重放）。
+penguinOS（https://github.com/Project-penguinOS）仅作功能参考，**不使用其代码和树**。
 首个目标设备：**Nubia Z60 Ultra (`cerro`, SM8650)**。
 
-本项目的核心模式是**补丁层**：上游 UwUAOSP 树保持纯净（可随时 sync/删除重建），所有 Penguin 改动以可重放补丁形式收敛在本仓库。工程结构详见 `docs/SKELETON.md`。
+核心模式：**组织可 `repo sync` 的完整树 + 可重放补丁层**。工程结构详见 `docs/SKELETON.md`。
 
 ---
 
