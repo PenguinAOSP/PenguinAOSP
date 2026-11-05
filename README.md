@@ -6,6 +6,11 @@ Unlike full-tree forks (AlphaDroid-style `platform_*` mirrors), PenguinAOSP keep
 
 First device: **Nubia Z60 Ultra (`cerro`, SM8650)**.
 
+## Built with vibe coding
+
+This repository was built with **[Cursor](https://cursor.com)** / **Codex** vibe coding (AI-assisted agent workflow).  
+Git history / GitHub **Contributors** only list the human owner ([@ycrrongos](https://github.com/ycrrongos)); AI tools are not co-authors on commits.
+
 ## Quick start
 
 ```bash
