@@ -116,7 +116,9 @@ bash scripts/apply-penguin-branding.sh
 ## 日常命令
 
 ```bash
-bash scripts/init-uwu-source.sh                       # 拉上游（大下载，走代理）
+bash scripts/init-penguin-source.sh                   # 组织 manifest：repo init/sync（推荐）
+bash scripts/init-uwu-source.sh                       # 仅 UwU 官方 versions（对照）
+bash scripts/github-fork-uwu-layer.sh                 # 维护：UwU ROM 层 fork 进组织
 bash scripts/apply-all.sh                             # 重放全部补丁
 PENGUIN_BRANDING=0 bash scripts/apply-all.sh          # 跳过某一层
 bash scripts/apply-penguin-branding.sh                # 只重放品牌层

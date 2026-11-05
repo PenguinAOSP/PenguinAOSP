@@ -14,6 +14,15 @@
 
 ---
 
+## 2026-11-06 — 组织可 repo sync：versions + UwU 层 fork + 保留补丁
+- 做了：
+  - 新模型：`platform_vendor_penguin-versions`（17.0.181）对外 `repo init/sync`；AOSP/Lineage 仍上游；UwU ROM 层 ~46 仓 fork 进 PenguinAOSP。
+  - 自有仓：`device_nubia_cerro` / `device_nubia_sm8650-common` / `vendor_penguin` / meta `PenguinAOSP`。
+  - 脚本：`init-penguin-source.sh`、`github-fork-uwu-layer.sh`；`apply-all.sh` 保留。
+  - 更新 SKELETON/README/AGENTS。
+- 没做完 / 下一步：等 fork 跑完；用 `init-penguin-source.sh` 验证 sync；撤销聊天里暴露的 PAT。
+- 产出：https://github.com/PenguinAOSP/platform_vendor_penguin-versions
+
 ## 2026-11-06 — GitHub org 仓上线（Contributors=本人 + vibe coding 声明）
 - 做了：
   - 组织仓 https://github.com/PenguinAOSP/PenguinAOSP 已推送 `main`（真相源树；`source/` 不进 git）。
