@@ -3,11 +3,22 @@
 # android.media.audio.common.types V4, while libmedia/libaudiobase now pull V5.
 # Soong forbids one module depending on two versions of the same aidl_interface.
 # Keep WFD shipped; point soong at V5 (platform) and skip ELF DT_NEEDED vs V4.
+#
+# PenguinOS: hooked into apply-all as PENGUIN_WFD_AIDL_V5 (M1 soong blocker).
+# Target is vendor/nubia blobs (local_manifest), not devices/ truth source.
+# Idempotent: V4→V5 replace no-ops when already V5; ELF flags skip if present.
 set -euo pipefail
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SOURCE="${SOURCE_DIR:-$ROOT/source}"
 BP="$SOURCE/vendor/nubia/sm8650-common/Android.bp"
 [[ -f "$BP" ]] || { echo "[wfd-aidl-v5] skip missing $BP"; exit 0; }
+if grep -q 'android.media.audio.common.types-V5-cpp' "$BP" \
+    && ! grep -q 'android.media.audio.common.types-V4-cpp' "$BP" \
+    && grep -q 'name: "libwfdservice"' "$BP" \
+    && grep -A5 'name: "libwfdservice"' "$BP" | grep -q 'check_elf_files: false'; then
+    echo "[wfd-aidl-v5] skip (already applied): $BP"
+    exit 0
+fi
 python3 - "$BP" <<'PY'
 from pathlib import Path
 import re

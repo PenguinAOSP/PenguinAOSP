@@ -120,7 +120,7 @@ bash scripts/apply-penguin-branding.sh
 ### lunch / 构建
 
 - lunch 目标格式跟随上游宏但换前缀：`penguin_cerro-cp2a-userdebug`（UwUAOSP 的 lunch 为 `uwu_<device>-cp2a-userdebug`，我们在 vendor 层注册 `penguin_` product 前缀）；
-- 构建命令：`bash scripts/build-cerro.sh va`（内部完成 lunch + `mka bacon`）。
+- 构建命令：`bash scripts/build-cerro.sh va`（内部完成 lunch + `m otapackage`；UwU 无 Lineage `mka`/`bacon`）。
 
 ### cerro 设备层来源
 

@@ -112,6 +112,16 @@ android_library_import {
     min_sdk_version: "21",
 }
 
+// PenguinOS: composables Material Symbols Rounded Filled icons
+// (Maven Central com.composables:icons-material-symbols-rounded-filled-android:2.2.1),
+// provided here because the UwU tree does not ship this module.
+android_library_import {
+    name: "com.composables_icons-material-symbols-rounded-filled-android",
+    aars: ["libs/icons-material-symbols-rounded-filled-android-2.2.1.aar"],
+    sdk_version: "current",
+    min_sdk_version: "21",
+}
+
 android_app {
     name: "PenguinLaboratory",
 
@@ -172,6 +182,8 @@ android_app {
 prebuilt_etc {
     name: "privapp_permissions_com.penguin.laboratory",
     src: "privapp_permissions_com.penguin.laboratory.xml",
+    // Soong installs as module name by default; PackageManager only loads *.xml.
+    filename: "privapp_permissions_com.penguin.laboratory.xml",
     sub_dir: "permissions",
     system_ext_specific: true,
 }

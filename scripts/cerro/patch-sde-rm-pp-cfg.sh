@@ -3,7 +3,7 @@
 # Caller never assigned it → clang -Werror -Wuninitialized.
 # Make pp_cfg local to the callee (it was never an input).
 set -euo pipefail
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SOURCE="${SOURCE_DIR:-$ROOT/source}"
 f="$SOURCE/kernel/nubia/sm8650-modules/qcom/opensource/display-drivers/msm/sde/sde_rm.c"
 [[ -f "$f" ]] || { echo "[sde-rm-pp] skip missing $f"; exit 0; }

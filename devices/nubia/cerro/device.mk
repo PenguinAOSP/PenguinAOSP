@@ -31,10 +31,11 @@ PRODUCT_PACKAGES += \
     SettingsProviderResCerro \
     LineageSdkResCerro
 
-# Nubia sliding switch (packages-overlay/NubiaParts)
-$(call inherit-product, packages/apps/NubiaParts/config.mk)
-PRODUCT_PACKAGES += \
-    NubiaGameSwitch
+# PenguinOS: Nubia sliding switch (NubiaParts) deferred — needs LineageParts
+# (org.lineageos) which UwU does not ship; port with its own feature doc later.
+#$(call inherit-product, packages/apps/NubiaParts/config.mk)
+#PRODUCT_PACKAGES += \
+#    NubiaGameSwitch
 
 # Inherit from proprietary targets
 $(call inherit-product, vendor/nubia/cerro/cerro-vendor.mk)

@@ -322,6 +322,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
 
 # Soong
+# PenguinOS: WiFi Soong namespaces (hardware/qcom-caf/wlan{,/qcwcn}) come from
+# hardware/qcom-caf/common/BoardConfigQcom.mk via BoardConfigUwU.mk, which
+# requires UWU_BUILD (set in penguin_cerro.mk / config.mk penguin_* patch).
 PRODUCT_SOONG_NAMESPACES += \
     $(COMMON_PATH) \
     hardware/qcom-caf/common/libqti-perfd-client \

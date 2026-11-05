@@ -1,0 +1,128 @@
+diff --git a/core/java/android/content/pm/ILauncherApps.aidl b/core/java/android/content/pm/ILauncherApps.aidl
+index 7278a678dcc8..248749d7d576 100644
+--- a/core/java/android/content/pm/ILauncherApps.aidl
++++ b/core/java/android/content/pm/ILauncherApps.aidl
+@@ -139,4 +139,7 @@ interface ILauncherApps {
+     ParceledListSlice getAvailableShortcuts(String callingPackage, in UserHandle user);
+ 
+     ParceledListSlice getActivityLaunchIntentForAllApps(String callingPackage, in UserHandle user);
++
++    boolean canForceStopPackage(String callingPackage, String packageName, in UserHandle user);
++    boolean forceStopPackage(String callingPackage, String packageName, in UserHandle user);
+ }
+diff --git a/core/java/android/content/pm/LauncherApps.java b/core/java/android/content/pm/LauncherApps.java
+index 16fff722fe3c..a692ac66eefa 100644
+--- a/core/java/android/content/pm/LauncherApps.java
++++ b/core/java/android/content/pm/LauncherApps.java
+@@ -1306,6 +1306,36 @@ public class LauncherApps {
+         }
+     }
+ 
++    /**
++     * Returns whether a package in an accessible, unlocked profile can be force stopped.
++     * Protected packages, active device administrators and restricted profiles are excluded.
++     *
++     * @hide
++     */
++    @RequiresPermission(android.Manifest.permission.FORCE_STOP_PACKAGES)
++    public boolean canForceStopPackage(@NonNull String packageName, @NonNull UserHandle user) {
++        try {
++            return mService.canForceStopPackage(mContext.getPackageName(), packageName, user);
++        } catch (RemoteException re) {
++            throw re.rethrowFromSystemServer();
++        }
++    }
++
++    /**
++     * Force stops a package only in the specified accessible profile, rechecking its eligibility.
++     * Returns false if the package or profile can no longer be stopped.
++     *
++     * @hide
++     */
++    @RequiresPermission(android.Manifest.permission.FORCE_STOP_PACKAGES)
++    public boolean forceStopPackage(@NonNull String packageName, @NonNull UserHandle user) {
++        try {
++            return mService.forceStopPackage(mContext.getPackageName(), packageName, user);
++        } catch (RemoteException re) {
++            throw re.rethrowFromSystemServer();
++        }
++    }
++
+     /**
+      * Gets the launcher extras supplied to the system when the given package was suspended via
+      * {@code PackageManager#setPackagesSuspended(String[], boolean, PersistableBundle,
+diff --git a/data/etc/com.android.launcher3.xml b/data/etc/com.android.launcher3.xml
+index 6dad7d87b2a4..8eca0df59df2 100644
+--- a/data/etc/com.android.launcher3.xml
++++ b/data/etc/com.android.launcher3.xml
+@@ -20,6 +20,7 @@
+         <permission name="android.permission.BIND_APPWIDGET"/>
+         <permission name="android.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS"/>
+         <permission name="android.permission.GET_ACCOUNTS_PRIVILEGED"/>
++        <permission name="android.permission.FORCE_STOP_PACKAGES"/>
+         <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+         <permission name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS"/>
+         <permission name="android.permission.START_TASKS_FROM_RECENTS"/>
+diff --git a/services/core/java/com/android/server/pm/LauncherAppsService.java b/services/core/java/com/android/server/pm/LauncherAppsService.java
+index 1197155e1a04..fe5da90a2e34 100644
+--- a/services/core/java/com/android/server/pm/LauncherAppsService.java
++++ b/services/core/java/com/android/server/pm/LauncherAppsService.java
+@@ -1168,6 +1168,58 @@ public class LauncherAppsService extends SystemService {
+             }
+         }
+ 
++        @Override
++        public boolean canForceStopPackage(String callingPackage, String packageName,
++                UserHandle user) {
++            return forceStopPackageInternal(callingPackage, packageName, user, false);
++        }
++
++        @Override
++        public boolean forceStopPackage(String callingPackage, String packageName, UserHandle user) {
++            return forceStopPackageInternal(callingPackage, packageName, user, true);
++        }
++
++        private boolean forceStopPackageInternal(String callingPackage, String packageName,
++                UserHandle user, boolean stop) {
++            Objects.requireNonNull(packageName);
++            Objects.requireNonNull(user);
++            final int callingUid = injectBinderCallingUid();
++            verifyCallingPackage(callingPackage, callingUid);
++            mContext.enforceCallingPermission(Manifest.permission.FORCE_STOP_PACKAGES,
++                    "Cannot force stop package");
++            final int userId = user.getIdentifier();
++            if (userId < 0 || !canAccessProfile(userId, "Cannot force stop package")
++                    || callingPackage.equals(packageName)) {
++                return false;
++            }
++
++            // Preserve caller visibility while evaluating policy under the system identity.
++            final long ident = Binder.clearCallingIdentity();
++            try {
++                final ApplicationInfo info = mPackageManagerInternal.getApplicationInfo(
++                        packageName, 0, callingUid, userId);
++                if (info == null || !info.enabled
++                        || (info.flags & ApplicationInfo.FLAG_INSTALLED) == 0
++                        || (info.flags & ApplicationInfo.FLAG_STOPPED) != 0
++                        || UserHandle.getAppId(info.uid) < Process.FIRST_APPLICATION_UID
++                        || UserHandle.isSameApp(info.uid, callingUid)
++                        || !mUserManagerInternal.isUserUnlocked(userId)
++                        || mUm.isQuietModeEnabled(user)
++                        || mUm.hasUserRestrictionForUser(UserManager.DISALLOW_APPS_CONTROL, user)
++                        || mPackageManagerInternal.isPackageStateProtected(packageName, userId)
++                        || (mDpm != null && mDpm.packageHasActiveAdmins(packageName, userId))) {
++                    return false;
++                }
++                if (stop) {
++                    mContext.getSystemService(ActivityManager.class)
++                            .forceStopPackageAsUser(packageName, userId);
++                }
++                return true;
++            } finally {
++                Binder.restoreCallingIdentity(ident);
++            }
++        }
++
+         @Override
+         public Bundle getSuspendedPackageLauncherExtras(String packageName,
+                 UserHandle user) {

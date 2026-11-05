@@ -1,6 +1,4 @@
-# Fan control
-genfscon sysfs /kernel/fan/fan_enable         u:object_r:sysfs_fan:s0
-genfscon sysfs /kernel/fan/fan_speed_level    u:object_r:sysfs_fan:s0
+# PenguinOS: fan sysfs labels dropped with sysfs_fan type (sm8650 has no fan).
 
 # Trigger buttons
 genfscon proc /nubia_key/sar0/mode_operation    u:object_r:proc_touchkey:s0

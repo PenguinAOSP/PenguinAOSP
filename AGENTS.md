@@ -19,8 +19,18 @@ penguinOS（AOSPA fork，https://github.com/Project-penguinOS）仅作功能参�
 4. **每次卡住、踩坑、误判，必须记入 `docs/TROUBLESHOOTING.md`。** 记症状、试过的方法、最终原因、解决办法。只记在聊天里 = 没记。
 5. **每次工作会话结束，必须往 `docs/WORKLOG.md` 顶部追加一条工作日志**（做了 / 没做完 / 产出）。下个 agent 靠它接续进度。
 6. **不要直接大段覆盖上游 SystemUI / Settings 来"顺便"带功能。** UwU 自带功能保持原样，品牌层做最小覆盖。
-7. **不要提交 git commit，除非用户明确要求**（Git 规范例外见 §Git 规范）。
+7. **不要提交 git commit，除非用户明确要求**（Git 规范例外见 §Git 规范）。用户说「搞一下 git / 提交 / commit / 存一下」即视为明确要求。
 8. **不要把 Penguin 补丁打进任何对照/参考树**（如 `MikuUI_cerro/`、`RisingOS_cerro/`、`AlphaDroid_Oneplus12/`），它们只读。
+9. **功能做完尽量编译并刷到真机验证，不要只改代码就停。** 默认可热推对应模块（SystemUI / Launcher 等）。**禁止**热推 `Settings.apk`（历史卡第二屏 / 签名问题）。
+10. **刷机 / 热推后的固定循环（冷却用 recovery，禁止乱回滚旧 APK）。**
+    - 推完后必须持续监控：`boot_completed` / bootanim、SystemUI **pid 是否反复变**、`logcat -b crash`。用 `bash scripts/watch-systemui-stability.sh`（默认 ≥60s）。仅瞬间 `pidof` **不算**通过。
+    - **FAIL（崩循环 / 卡第二屏 / bootanim 不退）时的唯一降温动作：**
+      1. **2 分钟内**抓齐日志（crash + 相关 logcat，落到 `logs/`），**不要**先去换旧版 APK「赌能开机」。
+      2. 立刻 `adb reboot recovery`（只要冷却进 recovery；**不要**默认 `reboot bootloader`，也**不要**用跨版本旧 SystemUI/Settings 覆盖）。
+      3. 在主机上根据日志修代码 → 再编再刷/热推 → **再跑同一监控** → 通过才进入下一功能。
+11. **禁止偷懒式验收。** 用户报的症状要逐条对着测；测不过就记入 `TROUBLESHOOTING.md` 并继续修，不得用无关指标糊弄。
+12. **用户说「先别弄了」时立刻停当前功能线**，只做其点名的收尾（如 git / 文档），不要夹带继续改其它功能。
+13. **priv-app 权限白名单文件名必须带 `.xml`。** `prebuilt_etc` 默认按 module `name` 安装；PackageManager 只加载 `*.xml`。缺后缀会导致 system_server 在 allowlist 校验时直接 FATAL（卡第二屏）。见 `docs/TROUBLESHOOTING.md`。
 
 ---
 
@@ -110,6 +120,13 @@ PENGUIN_BRANDING=0 bash scripts/apply-all.sh          # 跳过某一层
 bash scripts/apply-penguin-branding.sh                # 只重放品牌层
 bash scripts/build-cerro.sh va                        # 构建 cerro（M1 后可用）
 SKIP_APPLY=1 bash scripts/build-cerro.sh va           # 跳过重放直接编
+bash scripts/run-cerro-detached.sh                    # 脱离 IDE 后台编（看 logs/）
+bash scripts/watch-cerro-build.sh                     # 盯编译日志
+bash scripts/watch-systemui-stability.sh [serial]     # 刷机/热推后稳定性监控
+bash scripts/validate-penguinaosp-tree.sh             # 树完整性快检（不编译）
+bash scripts/sync-status.sh                           # repo sync 进度
+bash scripts/prepare-build-swap.sh                    # 大容量文件 swap（防 Soong OOM）
+source scripts/unlimit-build-env.sh                   # 解除 ulimit；配合 aurora_build/prlimit
 source scripts/proxy-env.sh                           # 代理（flclash 127.0.0.1:7890）
 ```
 
@@ -160,3 +177,6 @@ source scripts/proxy-env.sh                           # 代理（flclash 127.0.0
 - [ ] `docs/WORKLOG.md` 已追加本会话日志
 - [ ] 未把参考树（AlphaDroid/MikuUI/RisingOS）当主线
 - [ ] 用户可见系统名为 **PenguinAOSP**（非 UwUAOSP / 裸 AOSP）
+- [ ] 功能已编译并刷到真机（规则 9）
+- [ ] 若动过 SystemUI / 热推：已按硬性规则 10 监控；FAIL 时已抓日志并 `reboot recovery`（未热推 Settings、未乱回滚旧 APK）
+- [ ] priv-app 白名单若新增：设备上文件名带 `.xml`（规则 13）

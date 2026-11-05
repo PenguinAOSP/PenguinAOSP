@@ -20,3 +20,9 @@ __pycache__/
 
 # penguinOS 参考树（只读对照，见 docs/SKELETON.md §8）
 /reference/
+logs/
+build-cerro.log
+.ccache/
+
+# scratch pulls
+.tmp-artistaosp/
